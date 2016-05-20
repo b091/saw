@@ -1,112 +1,112 @@
 // __tests__/saw-test.js
 jest.dontMock('../saw.js');
 
-describe('saw', function() {
+describe('saw', () => {
     var saw;
-    beforeEach(function() {
+    beforeEach(() => {
         saw = require('../saw.js');
     });
 
-    afterEach(function() {
+    afterEach(() => {
         saw = null;
     });
 
-    it('should be an object', function() {
+    it('should be an object', () => {
         expect(saw).toBeDefined();
     });
 
-    it('should have an attribute to store the API handle', function() {
+    it('should have an attribute to store the API handle', () => {
         expect(saw.API).toBeDefined();
     });
 
-    it('should have an attribute to store the LMS initialization status', function() {
+    it('should have an attribute to store the LMS initialization status', () => {
         expect(saw.LMSInitialized).toBeDefined();
     });
 
-    it('should have an attribute to store session logs (interactio with the API hanlde)', function() {
+    it('should have an attribute to store session logs (interactio with the API hanlde)', () => {
         expect(saw.sessionLogs).toBeDefined();
         expect(saw.sessionLogs.length).toEqual(0);
     });
 
-    it('should have an isConfigured function', function() {
+    it('should have an isConfigured function', () => {
         expect(saw.isConfigured).toBeDefined();
     });
 
-    it('should not be configured before init invocation', function() {
+    it('should not be configured before init invocation', () => {
         expect(saw.isConfigured()).toBe(false);
     });
 
-    it('should have an lmsInitialize function', function() {
+    it('should have an lmsInitialize function', () => {
         expect(saw.lmsInitialize).toBeDefined();
     });
 
-    it('should have a lmsCommit function', function() {
+    it('should have a lmsCommit function', () => {
         expect(saw.lmsCommit).toBeDefined();
     });
 
-    it('should have a lmsFinish function', function() {
+    it('should have a lmsFinish function', () => {
         expect(saw.lmsFinish).toBeDefined();
     });
 
-    it('should have a setScormValue function', function() {
+    it('should have a setScormValue function', () => {
         expect(saw.setScormValue).toBeDefined();
     });
 
-    it('should have a getScormValue function', function() {
+    it('should have a getScormValue function', () => {
         expect(saw.getScormValue).toBeDefined();
     });
 
-    it('should not be initialize before init invocation', function() {
+    it('should not be initialize before init invocation', () => {
         expect(saw.isInitialized()).toBe(false);
     });
 
-    it('should have an initialize function', function() {
+    it('should have an initialize function', () => {
         expect(saw.initialize).toBeDefined();
     });
 
-    it('should have a logOperation function', function() {
+    it('should have a logOperation function', () => {
         expect(saw.logOperation).toBeDefined();
     });
 
-    it('should have a abort function', function() {
+    it('should have a abort function', () => {
         expect(saw.abort).toBeDefined();
     });
 
-    it('should have a commit function', function() {
+    it('should have a commit function', () => {
         expect(saw.commit).toBeDefined();
     });
 
-    it('should have a finish function', function() {
+    it('should have a finish function', () => {
         expect(saw.finish).toBeDefined();
     });
 
-    it('should have an unset function', function() {
+    it('should have an unset function', () => {
         expect(saw.unset).toBeDefined();
     });
 
     /**
      * saw.configure()
      */
-    describe('configure()', function() {
-        describe('configure() with a not available API Adapter', function() {
+    describe('configure()', () => {
+        describe('configure() with a not available API Adapter', () => {
 
-            it('should throw an error if no API Adapter is available', function() {
-                expect(function() {
+            it('should throw an error if no API Adapter is available', () => {
+                expect(() => {
                     saw.configure()
                 }).toThrow(new Error("A valid SCORM API Adapter can not be found in the window or in the window.opener"));
                 expect(saw.isConfigured()).toBe(false);
             });
         });
 
-        describe('configure() with an available API Adapter', function() {
+        describe('configure() with an available API Adapter', () => {
 
-            it('should be initialized after init invocation if the adapted is defined in the current window', function() {
+            it('should be initialized after init invocation if the adapted is defined in the current window', () => {
                 window.API = {};
                 saw.configure();
                 expect(saw.isConfigured()).toBe(true);
             });
 
-            it('should be initialized after init invocation if the API is defined in the window.opener', function() {
+            it('should be initialized after init invocation if the API is defined in the window.opener', () => {
                 var opener = window.opener;
                 var parent = {};
                 // building the nested parent structure with max level of deep in parent search
@@ -127,11 +127,11 @@ describe('saw', function() {
     /**
      *saw.lmsInitialize()
      */
-    describe('lmsInitialize', function() {
+    describe('lmsInitialize', () => {
         var LMSInit = jest.genMockFunction();
         var logOperation = jest.genMockFunction();
 
-        beforeEach(function() {
+        beforeEach(() => {
             saw = require('../saw.js');
             saw.logOperation = logOperation;
             window.API = {
@@ -140,12 +140,12 @@ describe('saw', function() {
 
         });
 
-        afterEach(function() {
+        afterEach(() => {
             saw = null;
             delete window.API;
         });
 
-        it('should be ok if the LMS can be initialized', function() {
+        it('should be ok if the LMS can be initialized', () => {
             //SCORM standard expect a String "true" to be returned
             LMSInit.mockReturnValueOnce("true");
 
@@ -155,7 +155,7 @@ describe('saw', function() {
             expect(LMSInit).toBeCalledWith('');
         });
 
-        it('should be ok if the LMS can be initialized but do not return a standard String "true"', function() {
+        it('should be ok if the LMS can be initialized but do not return a standard String "true"', () => {
             LMSInit.mockReturnValueOnce(true);
 
             saw.initialize();
@@ -164,11 +164,11 @@ describe('saw', function() {
             expect(LMSInit).toBeCalledWith('');
         });
 
-        it('should throw an error if LMS can not be initialized', function() {
+        it('should throw an error if LMS can not be initialized', () => {
             //SCORM standard expect a String "false" to be returned
             LMSInit.mockReturnValueOnce("false");
 
-            expect(function() {
+            expect(() => {
                 saw.initialize();
             }).toThrow(new Error('LMSInitialize failed'));
             expect(saw.isInitialized()).toBe(false);
@@ -179,13 +179,13 @@ describe('saw', function() {
     /**
      *saw.logOperation()
      */
-    describe('logOperation', function() {
+    describe('logOperation', () => {
         var LMSInit = jest.genMockFunction();
         var LMSGetLastErr = jest.genMockFunction();
         var LMSGetErrStr = jest.genMockFunction();
         var LMSGetDia = jest.genMockFunction();
 
-        beforeEach(function() {
+        beforeEach(() => {
             saw = require('../saw.js');
             window.API = {
                 LMSInitialize: LMSInit,
@@ -196,12 +196,12 @@ describe('saw', function() {
 
         });
 
-        afterEach(function() {
+        afterEach(() => {
             saw = null;
             delete window.API;
         });
 
-        it('should correctly initialized sessionLogs attribute', function() {
+        it('should correctly initialized sessionLogs attribute', () => {
             //SCORM standard expect a String "true" to be returned
             LMSInit.mockReturnValueOnce("true");
 
@@ -210,7 +210,7 @@ describe('saw', function() {
             expect(saw.sessionLogs[0].scormFn).toEqual('LMSInitialize');
         });
 
-        it('should add a log entry to the sessionLogs attribute when invoked', function() {
+        it('should add a log entry to the sessionLogs attribute when invoked', () => {
             //SCORM standard expect a String "true" to be returned
             LMSInit.mockReturnValueOnce("true");
             LMSGetLastErr.mockReturnValue("0");
@@ -234,7 +234,7 @@ describe('saw', function() {
     /**
      *saw.abort()
      */
-    describe('abort', function() {
+    describe('abort', () => {
         var LMSInit = jest.genMockFunction();
         var LMSGetLastErr = jest.genMockFunction();
         var LMSGetErrStr = jest.genMockFunction();
@@ -242,7 +242,7 @@ describe('saw', function() {
 
         var LMSCommit = jest.genMockFunction();
 
-        beforeEach(function() {
+        beforeEach(() => {
             saw = require('../saw.js');
             window.API = {
                 LMSInitialize: LMSInit,
@@ -254,17 +254,17 @@ describe('saw', function() {
 
         });
 
-        afterEach(function() {
+        afterEach(() => {
             saw = null;
             delete window.API;
         });
 
-        it('should raise an Exception', function() {
+        it('should raise an Exception', () => {
             //SCORM standard expect a String "true" to be returned
             LMSInit.mockReturnValueOnce("true");
             saw.initialize();
 
-            expect(function() {
+            expect(() => {
                 saw.abort("foo");
             }).toThrow(new Error('foo failed'));
             expect(saw.isInitialized()).toBe(false);
@@ -274,11 +274,11 @@ describe('saw', function() {
     /**
      *saw.lmsCommit()
      */
-    describe('lmsCommit', function() {
+    describe('lmsCommit', () => {
         var LMSInit = jest.genMockFunction();
         var LMSCommit = jest.genMockFunction();
 
-        beforeEach(function() {
+        beforeEach(() => {
             saw = require('../saw.js');
             window.API = {
                 LMSInitialize: LMSInit,
@@ -286,12 +286,12 @@ describe('saw', function() {
             };
         });
 
-        afterEach(function() {
+        afterEach(() => {
             saw = null;
             delete window.API;
         });
 
-        it('should be ok if LMSCommit succeed', function() {
+        it('should be ok if LMSCommit succeed', () => {
             //SCORM standard expect a String "true" to be returned
             LMSInit.mockReturnValueOnce("true");
             LMSCommit.mockReturnValueOnce("true");
@@ -305,7 +305,7 @@ describe('saw', function() {
             expect(saw.logOperation).toHaveBeenCalledWith("LMSCommit");
         });
 
-        it('should throw an error if LMSCommit fails', function() {
+        it('should throw an error if LMSCommit fails', () => {
             //SCORM standard expect a String "false" to be returned
             LMSInit.mockReturnValueOnce("true");
             LMSCommit.mockReturnValueOnce("false");
@@ -327,11 +327,11 @@ describe('saw', function() {
     /**
      *saw.lmsFinish()
      */
-    describe('lmsFinish', function() {
+    describe('lmsFinish', () => {
         var LMSInit = jest.genMockFunction();
         var LMSFinish = jest.genMockFunction();
 
-        beforeEach(function() {
+        beforeEach(() => {
             saw = require('../saw.js');
             window.API = {
                 LMSInitialize: LMSInit,
@@ -339,12 +339,12 @@ describe('saw', function() {
             };
         });
 
-        afterEach(function() {
+        afterEach(() => {
             saw = null;
             delete window.API;
         });
 
-        it('should be ok if LMSFinish succeed', function() {
+        it('should be ok if LMSFinish succeed', () => {
             //SCORM standard expect a String "true" to be returned
             LMSInit.mockReturnValueOnce("true");
             LMSFinish.mockReturnValueOnce("true");
@@ -359,7 +359,7 @@ describe('saw', function() {
             expect(saw.unset).toHaveBeenCalled();
         });
 
-        it('should throw an error if LMSCommit fails', function() {
+        it('should throw an error if LMSCommit fails', () => {
             //SCORM standard expect a String "false" to be returned
             LMSInit.mockReturnValueOnce("true");
             LMSFinish.mockReturnValueOnce("false");
@@ -381,11 +381,11 @@ describe('saw', function() {
     /**
      *saw.setScormValue()
      */
-    describe('setScormValue', function() {
+    describe('setScormValue', () => {
         var LMSInit = jest.genMockFunction();
         var LMSSetValue = jest.genMockFunction();
 
-        beforeEach(function() {
+        beforeEach(() => {
             saw = require('../saw.js');
             window.API = {
                 LMSInitialize: LMSInit,
@@ -393,12 +393,12 @@ describe('saw', function() {
             };
         });
 
-        afterEach(function() {
+        afterEach(() => {
             saw = null;
             delete window.API;
         });
 
-        it('should be ok if LMSSetValue succeed', function() {
+        it('should be ok if LMSSetValue succeed', () => {
             //SCORM standard expect a String "true" to be returned
             LMSInit.mockReturnValueOnce("true");
             LMSSetValue.mockReturnValueOnce("true");
@@ -412,7 +412,7 @@ describe('saw', function() {
             expect(saw.logOperation).toHaveBeenCalledWith("LMSSetValue", {'parameter': 'foo', 'value': 'bar'});
         });
 
-        it('should throw an error if LMSCommit fails', function() {
+        it('should throw an error if LMSCommit fails', () => {
             //SCORM standard expect a String "false" to be returned
             LMSInit.mockReturnValueOnce("true");
             LMSSetValue.mockReturnValueOnce("false");
@@ -433,11 +433,11 @@ describe('saw', function() {
     /**
      *saw.getScormValue()
      */
-    describe('getScormValue', function() {
+    describe('getScormValue', () => {
         var LMSInit = jest.genMockFunction();
         var LMSGetValue = jest.genMockFunction();
 
-        beforeEach(function() {
+        beforeEach(() => {
             saw = require('../saw.js');
             window.API = {
                 LMSInitialize: LMSInit,
@@ -445,12 +445,12 @@ describe('saw', function() {
             };
         });
 
-        afterEach(function() {
+        afterEach(() => {
             saw = null;
             delete window.API;
         });
 
-        it('should be ok if LMSGetValue succeed', function() {
+        it('should be ok if LMSGetValue succeed', () => {
             //SCORM standard expect a String "true" to be returned
             LMSInit.mockReturnValueOnce("true");
             LMSGetValue.mockReturnValueOnce("bar");
