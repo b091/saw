@@ -33,48 +33,16 @@ describe('SCORM API Wrapper', () => {
         expect(saw.sessionLogs.length).toEqual(0);
     });
 
-    it('should have an isConfigured function', () => {
-        expect(saw.isConfigured).toBeDefined();
-    });
-
     it('should not be configured before init invocation', () => {
         expect(saw.isConfigured()).toBe(false);
-    });
-
-    it('should have an lmsInitialize function', () => {
-        expect(saw.lmsInitialize).toBeDefined();
-    });
-
-    it('should have a lmsCommit function', () => {
-        expect(saw.lmsCommit).toBeDefined();
-    });
-
-    it('should have a lmsFinish function', () => {
-        expect(saw.lmsFinish).toBeDefined();
-    });
-
-    it('should have a setScormValue function', () => {
-        expect(saw.setScormValue).toBeDefined();
-    });
-
-    it('should have a getScormValue function', () => {
-        expect(saw.getScormValue).toBeDefined();
     });
 
     it('should not be initialize before init invocation', () => {
         expect(saw.isInitialized()).toBe(false);
     });
 
-    it('should have an initialize function', () => {
-        expect(saw.initialize).toBeDefined();
-    });
-
     it('should have a logOperation function', () => {
         expect(saw.logOperation).toBeDefined();
-    });
-
-    it('should have a abort function', () => {
-        expect(saw.abort).toBeDefined();
     });
 
     it('should have a commit function', () => {
@@ -105,7 +73,7 @@ describe('SCORM API Wrapper', () => {
 
         describe('configure() with an available API Adapter', () => {
 
-            it('should be initialized after init invocation if the adapted is defined in the current window', () => {
+            it('should be initialized after init invocation if the adapter is defined in the current window', () => {
                 window.API = {};
                 saw.configure();
                 expect(saw.isConfigured()).toBe(true);
