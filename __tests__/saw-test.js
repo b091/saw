@@ -66,7 +66,7 @@ describe('SCORM API Wrapper', () => {
             it('should throw an error if no API Adapter is available', () => {
                 expect(() => {
                     saw.configure()
-                }).toThrow(new Error("A valid SCORM API Adapter can not be found in the window or in the window.opener"));
+                }).toThrow(new Error('A valid SCORM API Adapter can not be found in the window or in the window.opener'));
                 expect(saw.isConfigured()).toBe(false);
             });
         });
@@ -116,8 +116,8 @@ describe('SCORM API Wrapper', () => {
         });
 
         it('should be ok if the LMS can be initialized', () => {
-            //SCORM standard expect a String "true" to be returned
-            LMSInit.mockReturnValueOnce("true");
+            //SCORM standard expect a String 'true' to be returned
+            LMSInit.mockReturnValueOnce('true');
 
             saw.initialize();
             expect(saw.isInitialized()).toBe(true);
@@ -125,7 +125,7 @@ describe('SCORM API Wrapper', () => {
             expect(LMSInit).toBeCalledWith('');
         });
 
-        it('should be ok if the LMS can be initialized but do not return a standard String "true"', () => {
+        it('should be ok if the LMS can be initialized but do not return a standard String `true`', () => {
             LMSInit.mockReturnValueOnce(true);
 
             saw.initialize();
@@ -135,8 +135,8 @@ describe('SCORM API Wrapper', () => {
         });
 
         it('should throw an error if LMS can not be initialized', () => {
-            //SCORM standard expect a String "false" to be returned
-            LMSInit.mockReturnValueOnce("false");
+            //SCORM standard expect a String 'false' to be returned
+            LMSInit.mockReturnValueOnce('false');
 
             expect(() => {
                 saw.initialize();
@@ -169,8 +169,8 @@ describe('SCORM API Wrapper', () => {
         });
 
         it('should correctly initialized sessionLogs attribute', () => {
-            //SCORM standard expect a String "true" to be returned
-            LMSInit.mockReturnValueOnce("true");
+            //SCORM standard expect a String 'true' to be returned
+            LMSInit.mockReturnValueOnce('true');
 
             saw.initialize();
             expect(saw.sessionLogs.length).toEqual(1);
@@ -178,23 +178,23 @@ describe('SCORM API Wrapper', () => {
         });
 
         it('should add a log entry to the sessionLogs attribute when invoked', () => {
-            //SCORM standard expect a String "true" to be returned
-            LMSInit.mockReturnValueOnce("true");
-            LMSGetLastErr.mockReturnValue("0");
-            LMSGetErrStr.mockReturnValue("NoErrorStr");
-            LMSGetDia.mockReturnValue("Diagnostic");
+            //SCORM standard expect a String 'true' to be returned
+            LMSInit.mockReturnValueOnce('true');
+            LMSGetLastErr.mockReturnValue('0');
+            LMSGetErrStr.mockReturnValue('NoErrorStr');
+            LMSGetDia.mockReturnValue('Diagnostic');
             saw.initialize();
-            saw.logOperation("foo", "bar");
+            saw.logOperation('foo', 'bar');
             expect(saw.sessionLogs.length).toEqual(2);
 
             expect(saw.sessionLogs[1].timestamp).toBeDefined();
             expect(saw.sessionLogs[1].scormFn).toEqual('foo');
             expect(saw.sessionLogs[1].scormFnArgs).toEqual('bar');
-            expect(saw.sessionLogs[1].errorCode).toEqual("0");
-            expect(saw.sessionLogs[1].errorCodeString).toEqual("NoError");
-            expect(LMSGetErrStr).toBeCalledWith("0");
-            expect(saw.sessionLogs[1].errorCodeStringLMS).toEqual("NoErrorStr");
-            expect(saw.sessionLogs[1].diagnostic).toEqual("Diagnostic");
+            expect(saw.sessionLogs[1].errorCode).toEqual('0');
+            expect(saw.sessionLogs[1].errorCodeString).toEqual('NoError');
+            expect(LMSGetErrStr).toBeCalledWith('0');
+            expect(saw.sessionLogs[1].errorCodeStringLMS).toEqual('NoErrorStr');
+            expect(saw.sessionLogs[1].diagnostic).toEqual('Diagnostic');
         });
     });
 
@@ -225,12 +225,12 @@ describe('SCORM API Wrapper', () => {
         });
 
         it('should raise an Exception', () => {
-            //SCORM standard expect a String "true" to be returned
-            LMSInit.mockReturnValueOnce("true");
+            //SCORM standard expect a String 'true' to be returned
+            LMSInit.mockReturnValueOnce('true');
             saw.initialize();
 
             expect(() => {
-                saw.abort("foo");
+                saw.abort('foo');
             }).toThrow(new Error('foo failed'));
             expect(saw.isInitialized()).toBe(false);
         });
@@ -255,9 +255,9 @@ describe('SCORM API Wrapper', () => {
         });
 
         it('should be ok if LMSCommit succeed', () => {
-            //SCORM standard expect a String "true" to be returned
-            LMSInit.mockReturnValueOnce("true");
-            LMSCommit.mockReturnValueOnce("true");
+            //SCORM standard expect a String 'true' to be returned
+            LMSInit.mockReturnValueOnce('true');
+            LMSCommit.mockReturnValueOnce('true');
             spyOn(saw, 'logOperation');
             saw.initialize();
             saw.lmsCommit();
@@ -265,13 +265,13 @@ describe('SCORM API Wrapper', () => {
             expect(LMSCommit).toBeCalled();
             expect(LMSCommit).toBeCalledWith('');
             expect(saw.logOperation).toHaveBeenCalled();
-            expect(saw.logOperation).toHaveBeenCalledWith("LMSCommit");
+            expect(saw.logOperation).toHaveBeenCalledWith('LMSCommit');
         });
 
         it('should throw an error if LMSCommit fails', () => {
-            //SCORM standard expect a String "false" to be returned
-            LMSInit.mockReturnValueOnce("true");
-            LMSCommit.mockReturnValueOnce("false");
+            //SCORM standard expect a String 'false' to be returned
+            LMSInit.mockReturnValueOnce('true');
+            LMSCommit.mockReturnValueOnce('false');
             spyOn(saw, 'logOperation');
             spyOn(saw, 'abort');
             saw.initialize();
@@ -281,9 +281,9 @@ describe('SCORM API Wrapper', () => {
             expect(LMSCommit).toBeCalled();
             expect(LMSCommit).toBeCalledWith('');
             expect(saw.logOperation).toHaveBeenCalled();
-            expect(saw.logOperation).toHaveBeenCalledWith("LMSCommit");
+            expect(saw.logOperation).toHaveBeenCalledWith('LMSCommit');
             expect(saw.abort).toHaveBeenCalled();
-            expect(saw.abort).toHaveBeenCalledWith("LMSCommit");
+            expect(saw.abort).toHaveBeenCalledWith('LMSCommit');
         });
     });
 
@@ -306,9 +306,9 @@ describe('SCORM API Wrapper', () => {
         });
 
         it('should be ok if LMSFinish succeed', () => {
-            //SCORM standard expect a String "true" to be returned
-            LMSInit.mockReturnValueOnce("true");
-            LMSFinish.mockReturnValueOnce("true");
+            //SCORM standard expect a String 'true' to be returned
+            LMSInit.mockReturnValueOnce('true');
+            LMSFinish.mockReturnValueOnce('true');
             spyOn(saw, 'logOperation');
             spyOn(saw, 'unset');
             saw.initialize();
@@ -316,14 +316,14 @@ describe('SCORM API Wrapper', () => {
             expect(LMSFinish).toBeCalled();
             expect(LMSFinish).toBeCalledWith('');
             expect(saw.logOperation).toHaveBeenCalled();
-            expect(saw.logOperation).toHaveBeenCalledWith("LMSFinish");
+            expect(saw.logOperation).toHaveBeenCalledWith('LMSFinish');
             expect(saw.unset).toHaveBeenCalled();
         });
 
         it('should throw an error if LMSCommit fails', () => {
-            //SCORM standard expect a String "false" to be returned
-            LMSInit.mockReturnValueOnce("true");
-            LMSFinish.mockReturnValueOnce("false");
+            //SCORM standard expect a String 'false' to be returned
+            LMSInit.mockReturnValueOnce('true');
+            LMSFinish.mockReturnValueOnce('false');
             spyOn(saw, 'logOperation');
             spyOn(saw, 'abort');
             saw.initialize();
@@ -333,9 +333,9 @@ describe('SCORM API Wrapper', () => {
             expect(LMSFinish).toBeCalled();
             expect(LMSFinish).toBeCalledWith('');
             expect(saw.logOperation).toHaveBeenCalled();
-            expect(saw.logOperation).toHaveBeenCalledWith("LMSFinish");
+            expect(saw.logOperation).toHaveBeenCalledWith('LMSFinish');
             expect(saw.abort).toHaveBeenCalled();
-            expect(saw.abort).toHaveBeenCalledWith("LMSFinish");
+            expect(saw.abort).toHaveBeenCalledWith('LMSFinish');
         });
     });
 
@@ -358,9 +358,9 @@ describe('SCORM API Wrapper', () => {
         });
 
         it('should be ok if LMSSetValue succeed', () => {
-            //SCORM standard expect a String "true" to be returned
-            LMSInit.mockReturnValueOnce("true");
-            LMSSetValue.mockReturnValueOnce("true");
+            //SCORM standard expect a String 'true' to be returned
+            LMSInit.mockReturnValueOnce('true');
+            LMSSetValue.mockReturnValueOnce('true');
             spyOn(saw, 'logOperation');
             saw.initialize();
             saw.setScormValue('foo', 'bar');
@@ -368,13 +368,13 @@ describe('SCORM API Wrapper', () => {
             expect(LMSSetValue).toBeCalled();
             expect(LMSSetValue).toBeCalledWith('foo', 'bar');
             expect(saw.logOperation).toHaveBeenCalled();
-            expect(saw.logOperation).toHaveBeenCalledWith("LMSSetValue", {'parameter': 'foo', 'value': 'bar'});
+            expect(saw.logOperation).toHaveBeenCalledWith('LMSSetValue', {'parameter': 'foo', 'value': 'bar'});
         });
 
         it('should throw an error if LMSCommit fails', () => {
-            //SCORM standard expect a String "false" to be returned
-            LMSInit.mockReturnValueOnce("true");
-            LMSSetValue.mockReturnValueOnce("false");
+            //SCORM standard expect a String 'false' to be returned
+            LMSInit.mockReturnValueOnce('true');
+            LMSSetValue.mockReturnValueOnce('false');
             spyOn(saw, 'logOperation');
             spyOn(saw, 'abort');
             saw.initialize();
@@ -383,9 +383,9 @@ describe('SCORM API Wrapper', () => {
             expect(LMSSetValue).toBeCalled();
             expect(LMSSetValue).toBeCalledWith('foo', 'bar');
             expect(saw.logOperation).toHaveBeenCalled();
-            expect(saw.logOperation).toHaveBeenCalledWith("LMSSetValue", {'parameter': 'foo', 'value': 'bar'});
+            expect(saw.logOperation).toHaveBeenCalledWith('LMSSetValue', {'parameter': 'foo', 'value': 'bar'});
             expect(saw.abort).toHaveBeenCalled();
-            expect(saw.abort).toHaveBeenCalledWith("LMSSetValue");
+            expect(saw.abort).toHaveBeenCalledWith('LMSSetValue');
         });
     });
 
@@ -408,9 +408,9 @@ describe('SCORM API Wrapper', () => {
         });
 
         it('should be ok if LMSGetValue succeed', () => {
-            //SCORM standard expect a String "true" to be returned
-            LMSInit.mockReturnValueOnce("true");
-            LMSGetValue.mockReturnValueOnce("bar");
+            //SCORM standard expect a String 'true' to be returned
+            LMSInit.mockReturnValueOnce('true');
+            LMSGetValue.mockReturnValueOnce('bar');
             spyOn(saw, 'logOperation');
             saw.initialize();
 
@@ -418,7 +418,7 @@ describe('SCORM API Wrapper', () => {
             expect(LMSGetValue).toBeCalled();
             expect(LMSGetValue).toBeCalledWith('foo');
             expect(saw.logOperation).toHaveBeenCalled();
-            expect(saw.logOperation).toHaveBeenCalledWith("LMSGetValue", {'parameter': 'foo', 'value': 'bar'});
+            expect(saw.logOperation).toHaveBeenCalledWith('LMSGetValue', {'parameter': 'foo', 'value': 'bar'});
         });
     });
 
