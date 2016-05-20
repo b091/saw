@@ -3,7 +3,7 @@ jest.dontMock('../src/index.js');
 jest.dontMock('../src/SCORM/API.js');
 jest.dontMock('../src/SCORM/APIWrapper.js');
 jest.dontMock('../src/SCORM/findAPI.js');
-jest.dontMock('../src/SCORM/StatusCode.js');
+jest.dontMock('../src/SCORM/STATUS_CODE.js');
 
 describe('SCORM API Wrapper', () => {
 
@@ -25,7 +25,7 @@ describe('SCORM API Wrapper', () => {
     });
 
     it('should have an attribute to store the LMS initialization status', () => {
-        expect(saw.LMSInitialized).toBeDefined();
+        expect(saw.LMS_INITIALIZED).toBeDefined();
     });
 
     it('should have an attribute to store session logs (interactio with the API hanlde)', () => {

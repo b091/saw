@@ -8,7 +8,7 @@ export function findAPI(win:any):SCORMAPI {
   if (win == null) {
     return null;
   }
-  while ((win.API == null) && (win.parent != null) && (win.parent != win)) {
+  while ((win.API == null) && (win.parent != null) && (win.parent !== win)) {
     findAPITries++;
     if (findAPITries > 7) {
       return null;

@@ -1,4 +1,4 @@
-export const StatusCode = {
+export const STATUS_CODE:{[key:string]:string} = {
   '0': 'NoError',
   '101': 'GeneralException',
   '102': 'ServerBusy',
@@ -12,4 +12,3 @@ export const StatusCode = {
   '404': 'ElementIsWriteOnly',
   '405': 'IncorrectDataType'
 };
-

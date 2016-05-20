@@ -1,22 +1,22 @@
 import {findAPI} from './findAPI';
-import {StatusCode} from './StatusCode';
+import {STATUS_CODE} from './STATUS_CODE';
 import {SCORMAPI} from './API';
 
 export class APIWrapper {
 
-  private LMSInitialized:boolean = false;
-  private API:SCORMAPI = null;
   public sessionLogs:Array<LOG> = [];
 
+  private LMS_INITIALIZED:boolean = false;
+  private API:SCORMAPI = null;
 
   public unset():void {
-    this.LMSInitialized = false;
+    this.LMS_INITIALIZED = false;
     this.API = null;
   }
 
   public configure():void {
     this.API = findAPI(window);
-    if ((this.API == null) && (window.opener != null) && (typeof(window.opener) != 'undefined')) {
+    if ((this.API == null) && (window.opener != null) && (typeof(window.opener) !== 'undefined')) {
       this.API = findAPI(window.opener);
     }
 
@@ -30,41 +30,40 @@ export class APIWrapper {
   }
 
   public isInitialized():boolean {
-    return this.LMSInitialized;
+    return this.LMS_INITIALIZED;
   }
 
   public lmsInitialize():void {
-    //see 3.2.2.1 LMSInitialize
-    this.LMSInitialized = 'true' === String(this.API.LMSInitialize(''));
-    this.logOperation('LMSInitialize');
+    // see 3.2.2.1 LMSInitialize
+    const operationName:string = 'LMSInitialize';
+    this.LMS_INITIALIZED = this.isSucceeded(this.API.LMSInitialize(''));
+    this.logOperation(operationName);
     if (!this.isInitialized()) {
-      this.abort('LMSInitialize');
+      this.abort(operationName);
     }
   }
 
   public lmsCommit():void {
-    const succeeded:boolean = 'true' === String(this.API.LMSCommit(''));
-    this.logOperation('LMSCommit');
-    if (!succeeded) {
-      this.abort('LMSCommit');
+    const operationName:string = 'LMSCommit';
+    this.logOperation(operationName);
+    if (!this.isSucceeded(this.API.LMSCommit(''))) {
+      this.abort(operationName);
     }
   }
 
   public lmsFinish():void {
-    const succeeded:boolean = 'true' === String(this.API.LMSFinish(''));
-    this.logOperation('LMSFinish');
-    if (!succeeded) {
-      this.abort('LMSFinish');
+    const operationName:string = 'LMSFinish';
+    this.logOperation(operationName);
+    if (!this.isSucceeded(this.API.LMSFinish(''))) {
+      this.abort(operationName);
     }
 
     this.unset();
   }
 
-  public setScormValue(parameter, value):void {
-
-    const succeeded:boolean = 'true' === String(this.API.LMSSetValue(parameter, value));
+  public setScormValue(parameter:string, value:string):void {
     this.logOperation('LMSSetValue', {'parameter': parameter, 'value': value});
-    if (!succeeded) {
+    if (!this.isSucceeded(this.API.LMSSetValue(parameter, value))) {
       this.abort('LMSSetValue');
     }
   }
@@ -92,8 +91,8 @@ export class APIWrapper {
     this.lmsFinish();
   }
 
-  public abort(action):void {
-    this.LMSInitialized = false;
+  public abort(action:string):void {
+    this.LMS_INITIALIZED = false;
     this.API = null;
 
     throw new Error(`${action} failed`);
@@ -104,7 +103,7 @@ export class APIWrapper {
 
     return {
       code: parseInt(error, 10),
-      message: StatusCode[error]
+      message: STATUS_CODE[error]
     };
   }
 
@@ -115,10 +114,14 @@ export class APIWrapper {
       'scormFn': scormAPIFn,
       'scormFnArgs': scormAPIFnArguments,
       'errorCode': scormLastErrCode,
-      'errorCodeString': StatusCode[scormLastErrCode],
+      'errorCodeString': STATUS_CODE[scormLastErrCode],
       'errorCodeStringLMS': this.API.LMSGetErrorString(scormLastErrCode),
       'diagnostic': this.API.LMSGetDiagnostic(scormLastErrCode)
     });
+  }
+
+  private isSucceeded(apiCall:any):boolean {
+    return 'true' === String(apiCall);
   }
 
 }
