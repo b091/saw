@@ -1,10 +1,13 @@
 // __tests__/saw-test.js
-jest.dontMock('../saw.js');
+jest.dontMock('../src/index.js');
+jest.dontMock('../src/saw.js');
+jest.dontMock('../src/findAPI.js');
 
 describe('saw', () => {
+
     var saw;
     beforeEach(() => {
-        saw = require('../saw.js');
+        saw = require('../src/index.js');
     });
 
     afterEach(() => {
@@ -132,12 +135,10 @@ describe('saw', () => {
         var logOperation = jest.genMockFunction();
 
         beforeEach(() => {
-            saw = require('../saw.js');
             saw.logOperation = logOperation;
             window.API = {
                 LMSInitialize: LMSInit
             };
-
         });
 
         afterEach(() => {
@@ -186,7 +187,6 @@ describe('saw', () => {
         var LMSGetDia = jest.genMockFunction();
 
         beforeEach(() => {
-            saw = require('../saw.js');
             window.API = {
                 LMSInitialize: LMSInit,
                 LMSGetLastError: LMSGetLastErr,
@@ -243,7 +243,6 @@ describe('saw', () => {
         var LMSCommit = jest.genMockFunction();
 
         beforeEach(() => {
-            saw = require('../saw.js');
             window.API = {
                 LMSInitialize: LMSInit,
                 LMSCommit: LMSCommit,
@@ -279,7 +278,6 @@ describe('saw', () => {
         var LMSCommit = jest.genMockFunction();
 
         beforeEach(() => {
-            saw = require('../saw.js');
             window.API = {
                 LMSInitialize: LMSInit,
                 LMSCommit: LMSCommit,
@@ -332,7 +330,6 @@ describe('saw', () => {
         var LMSFinish = jest.genMockFunction();
 
         beforeEach(() => {
-            saw = require('../saw.js');
             window.API = {
                 LMSInitialize: LMSInit,
                 LMSFinish: LMSFinish,
@@ -386,7 +383,6 @@ describe('saw', () => {
         var LMSSetValue = jest.genMockFunction();
 
         beforeEach(() => {
-            saw = require('../saw.js');
             window.API = {
                 LMSInitialize: LMSInit,
                 LMSSetValue: LMSSetValue,
@@ -438,7 +434,6 @@ describe('saw', () => {
         var LMSGetValue = jest.genMockFunction();
 
         beforeEach(() => {
-            saw = require('../saw.js');
             window.API = {
                 LMSInitialize: LMSInit,
                 LMSGetValue: LMSGetValue,

@@ -2,8 +2,10 @@
   "name": "scorm-api-wrapper",
   "version": "0.0.2",
   "description": "A SCORM API wrapper for your Sharable Content Object (a.k.a. Learning Object)",
-  "main": "saw.js",
+  "main": "src/index.js",
   "devDependencies": {
+    "babel-jest": "^12.0.2",
+    "babel-preset-es2015": "^6.9.0",
     "flog": "0.0.1",
     "jest-cli": "^12.0.2"
   },
@@ -20,6 +22,18 @@
     "wrapper",
     "e-learning"
   ],
+  "jest": {
+    "scriptPreprocessor": "./node_modules/babel-jest",
+    "testFileExtensions": [
+      "es6",
+      "js"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "es6"
+    ]
+  },
   "author": "Marco Loche <marco@marcoloche.com> (www.marcoloche.com)",
   "readmeFilename": "README.md",
   "license": {
