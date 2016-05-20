@@ -91,7 +91,9 @@ describe('saw', function() {
         describe('configure() with a not available API Adapter', function() {
 
             it('should throw an error if no API Adapter is available', function() {
-                expect(saw.configure).toThrow("A valid SCORM API Adapter can not be found in the window or in the window.opener");
+                expect(function() {
+                    saw.configure()
+                }).toThrow(new Error("A valid SCORM API Adapter can not be found in the window or in the window.opener"));
                 expect(saw.isConfigured()).toBe(false);
             });
         });
@@ -168,7 +170,7 @@ describe('saw', function() {
 
             expect(function() {
                 saw.initialize();
-            }).toThrow('LMSInitialize failed');
+            }).toThrow(new Error('LMSInitialize failed'));
             expect(saw.isInitialized()).toBe(false);
         });
 
@@ -264,7 +266,7 @@ describe('saw', function() {
 
             expect(function() {
                 saw.abort("foo");
-            }).toThrow('foo failed');
+            }).toThrow(new Error('foo failed'));
             expect(saw.isInitialized()).toBe(false);
         });
     });
