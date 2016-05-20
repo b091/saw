@@ -1,4 +1,4 @@
-export const SCORMStatusCode = {
+export const StatusCode = {
     '0': 'NoError',
     '101': 'GeneralException',
     '102': 'ServerBusy',

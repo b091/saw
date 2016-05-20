@@ -1,10 +1,10 @@
-import {saw} from './saw';
+import {APIWrapper} from './SCORM/APIWrapper';
 
 ((() => {
     if (typeof module === 'object' && typeof module.exports === 'object') {
-        module.exports = new saw();
+        module.exports = new APIWrapper();
     }
     else if (typeof define === 'function' && define.amd) {
-        define(new saw());
+        define(new APIWrapper());
     }
 }).call(this));

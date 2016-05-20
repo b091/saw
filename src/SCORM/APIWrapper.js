@@ -1,7 +1,7 @@
-import {findAPI} from "./findAPI";
-import {SCORMStatusCode} from "./SCORMStatusCode";
+import {findAPI} from './findAPI';
+import {StatusCode} from './StatusCode';
 
-export class saw {
+export class APIWrapper {
 
     constructor() {
         this.LMSInitialized = false;
@@ -16,12 +16,12 @@ export class saw {
 
     configure() {
         this.API = findAPI(window);
-        if ((this.API == null) && (window.opener != null) && (typeof(window.opener) != "undefined")) {
+        if ((this.API == null) && (window.opener != null) && (typeof(window.opener) != 'undefined')) {
             this.API = findAPI(window.opener);
         }
 
         if (this.API == null) {
-            throw new Error("A valid SCORM API Adapter can not be found in the window or in the window.opener");
+            throw new Error('A valid SCORM API Adapter can not be found in the window or in the window.opener');
         }
     }
 
@@ -35,26 +35,26 @@ export class saw {
 
     lmsInitialize() {
         //see 3.2.2.1 LMSInitialize
-        this.LMSInitialized = "true" === String(this.API.LMSInitialize(""));
+        this.LMSInitialized = 'true' === String(this.API.LMSInitialize(''));
         this.logOperation('LMSInitialize');
         if (!this.isInitialized()) {
-            this.abort("LMSInitialize");
+            this.abort('LMSInitialize');
         }
     }
 
     lmsCommit() {
-        var succeeded = "true" === String(this.API.LMSCommit(""));
+        const succeeded = 'true' === String(this.API.LMSCommit(''));
         this.logOperation('LMSCommit');
         if (!succeeded) {
-            this.abort("LMSCommit");
+            this.abort('LMSCommit');
         }
     }
 
     lmsFinish() {
-        var succeeded = "true" === String(this.API.LMSFinish(""));
+        const succeeded = 'true' === String(this.API.LMSFinish(''));
         this.logOperation('LMSFinish');
         if (!succeeded) {
-            this.abort("LMSFinish");
+            this.abort('LMSFinish');
         }
 
         this.unset();
@@ -62,10 +62,10 @@ export class saw {
 
     setScormValue(parameter, value) {
 
-        var succeeded = "true" === String(this.API.LMSSetValue(parameter, value));
+        const succeeded = 'true' === String(this.API.LMSSetValue(parameter, value));
         this.logOperation('LMSSetValue', {'parameter': parameter, 'value': value});
         if (!succeeded) {
-            this.abort("LMSSetValue");
+            this.abort('LMSSetValue');
         }
     }
 
@@ -96,7 +96,7 @@ export class saw {
         this.LMSInitialized = false;
         this.API = null;
 
-        throw new Error(action + " failed");
+        throw new Error(`${action} failed`);
     }
 
     getLastError() {
@@ -104,7 +104,7 @@ export class saw {
 
         return {
             code: parseInt(error, 10),
-            message: SCORMStatusCode[error]
+            message: StatusCode[error]
         };
     }
 
@@ -115,9 +115,9 @@ export class saw {
             'scormFn': scormAPIFn,
             'scormFnArgs': scormAPIFnArguments,
             'errorCode': scormLastErrCode,
-            'errorCodeString': SCORMStatusCode[scormLastErrCode],
+            'errorCodeString': StatusCode[scormLastErrCode],
             'errorCodeStringLMS': this.API.LMSGetErrorString(scormLastErrCode),
-            'diagnostic': this.API.LMSGetDiagnostic("")
+            'diagnostic': this.API.LMSGetDiagnostic('')
         };
 
         this.sessionLogs.push(log);

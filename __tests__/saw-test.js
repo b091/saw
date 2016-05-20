@@ -1,11 +1,12 @@
 // __tests__/saw-test.js
 jest.dontMock('../src/index.js');
-jest.dontMock('../src/saw.js');
-jest.dontMock('../src/findAPI.js');
+jest.dontMock('../src/SCORM/APIWrapper.js');
+jest.dontMock('../src/SCORM/StatusCode.js');
+jest.dontMock('../src/SCORM/findAPI.js');
 
-describe('saw', () => {
+describe('SCORM API Wrapper', () => {
 
-    var saw;
+    let saw;
     beforeEach(() => {
         saw = require('../src/index.js');
     });
@@ -110,8 +111,8 @@ describe('saw', () => {
             });
 
             it('should be initialized after init invocation if the API is defined in the window.opener', () => {
-                var opener = window.opener;
-                var parent = {};
+                const opener = window.opener;
+                let parent = {};
                 // building the nested parent structure with max level of deep in parent search
                 for (var i = 0; i++; i <= 7) {
                     parent = {'parent': parent};
@@ -128,11 +129,11 @@ describe('saw', () => {
     });
 
     /**
-     *saw.lmsInitialize()
+     * saw.lmsInitialize()
      */
     describe('lmsInitialize', () => {
-        var LMSInit = jest.genMockFunction();
-        var logOperation = jest.genMockFunction();
+        const LMSInit = jest.genMockFunction();
+        const logOperation = jest.genMockFunction();
 
         beforeEach(() => {
             saw.logOperation = logOperation;
@@ -142,7 +143,6 @@ describe('saw', () => {
         });
 
         afterEach(() => {
-            saw = null;
             delete window.API;
         });
 
@@ -178,13 +178,13 @@ describe('saw', () => {
     });
 
     /**
-     *saw.logOperation()
+     * saw.logOperation()
      */
     describe('logOperation', () => {
-        var LMSInit = jest.genMockFunction();
-        var LMSGetLastErr = jest.genMockFunction();
-        var LMSGetErrStr = jest.genMockFunction();
-        var LMSGetDia = jest.genMockFunction();
+        const LMSInit = jest.genMockFunction();
+        const LMSGetLastErr = jest.genMockFunction();
+        const LMSGetErrStr = jest.genMockFunction();
+        const LMSGetDia = jest.genMockFunction();
 
         beforeEach(() => {
             window.API = {
@@ -193,11 +193,9 @@ describe('saw', () => {
                 LMSGetErrorString: LMSGetErrStr,
                 LMSGetDiagnostic: LMSGetDia
             };
-
         });
 
         afterEach(() => {
-            saw = null;
             delete window.API;
         });
 
@@ -232,15 +230,15 @@ describe('saw', () => {
     });
 
     /**
-     *saw.abort()
+     * saw.abort()
      */
     describe('abort', () => {
-        var LMSInit = jest.genMockFunction();
-        var LMSGetLastErr = jest.genMockFunction();
-        var LMSGetErrStr = jest.genMockFunction();
-        var LMSGetDia = jest.genMockFunction();
+        const LMSInit = jest.genMockFunction();
+        const LMSGetLastErr = jest.genMockFunction();
+        const LMSGetErrStr = jest.genMockFunction();
+        const LMSGetDia = jest.genMockFunction();
 
-        var LMSCommit = jest.genMockFunction();
+        const LMSCommit = jest.genMockFunction();
 
         beforeEach(() => {
             window.API = {
@@ -254,7 +252,6 @@ describe('saw', () => {
         });
 
         afterEach(() => {
-            saw = null;
             delete window.API;
         });
 
@@ -271,11 +268,11 @@ describe('saw', () => {
     });
 
     /**
-     *saw.lmsCommit()
+     * saw.lmsCommit()
      */
     describe('lmsCommit', () => {
-        var LMSInit = jest.genMockFunction();
-        var LMSCommit = jest.genMockFunction();
+        const LMSInit = jest.genMockFunction();
+        const LMSCommit = jest.genMockFunction();
 
         beforeEach(() => {
             window.API = {
@@ -285,7 +282,6 @@ describe('saw', () => {
         });
 
         afterEach(() => {
-            saw = null;
             delete window.API;
         });
 
@@ -323,11 +319,11 @@ describe('saw', () => {
     });
 
     /**
-     *saw.lmsFinish()
+     * saw.lmsFinish()
      */
     describe('lmsFinish', () => {
-        var LMSInit = jest.genMockFunction();
-        var LMSFinish = jest.genMockFunction();
+        const LMSInit = jest.genMockFunction();
+        const LMSFinish = jest.genMockFunction();
 
         beforeEach(() => {
             window.API = {
@@ -337,7 +333,6 @@ describe('saw', () => {
         });
 
         afterEach(() => {
-            saw = null;
             delete window.API;
         });
 
@@ -376,11 +371,11 @@ describe('saw', () => {
     });
 
     /**
-     *saw.setScormValue()
+     * saw.setScormValue()
      */
     describe('setScormValue', () => {
-        var LMSInit = jest.genMockFunction();
-        var LMSSetValue = jest.genMockFunction();
+        const LMSInit = jest.genMockFunction();
+        const LMSSetValue = jest.genMockFunction();
 
         beforeEach(() => {
             window.API = {
@@ -390,7 +385,6 @@ describe('saw', () => {
         });
 
         afterEach(() => {
-            saw = null;
             delete window.API;
         });
 
@@ -427,11 +421,11 @@ describe('saw', () => {
     });
 
     /**
-     *saw.getScormValue()
+     * saw.getScormValue()
      */
     describe('getScormValue', () => {
-        var LMSInit = jest.genMockFunction();
-        var LMSGetValue = jest.genMockFunction();
+        const LMSInit = jest.genMockFunction();
+        const LMSGetValue = jest.genMockFunction();
 
         beforeEach(() => {
             window.API = {
@@ -441,7 +435,6 @@ describe('saw', () => {
         });
 
         afterEach(() => {
-            saw = null;
             delete window.API;
         });
 
