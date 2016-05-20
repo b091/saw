@@ -12,7 +12,7 @@
     "typescript": "^1.8.10"
   },
   "scripts": {
-    "test": "jest"
+    "test": "./node_modules/.bin/tsc && ./node_modules/.bin/jest"
   },
   "repository": {
     "type": "git",
