@@ -1,17 +1,21 @@
-let findAPITries = 0;
-// The function charged to locate the API adapter object presented by the LMS.
-// As described in section 3.3.6.1 of the documentation.
-export function findAPI(win) {
-    if (win == null) {
-        return null;
-    }
-    while ((win.API == null) && (win.parent != null) && (win.parent != win)) {
-        findAPITries++;
-        if (findAPITries > 7) {
+define(["require", "exports"], function (require, exports) {
+    "use strict";
+    var findAPITries = 0;
+    // The function charged to locate the API adapter object presented by the LMS.
+    // As described in section 3.3.6.1 of the documentation.
+    function findAPI(win) {
+        if (win == null) {
             return null;
         }
-        win = win.parent;
+        while ((win.API == null) && (win.parent != null) && (win.parent != win)) {
+            findAPITries++;
+            if (findAPITries > 7) {
+                return null;
+            }
+            win = win.parent;
+        }
+        return win.API;
     }
-
-    return win.API;
-}
+    exports.findAPI = findAPI;
+});
+//# sourceMappingURL=findAPI.js.map
