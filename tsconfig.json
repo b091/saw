@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "experimentalDecorators": true,
-    "module": "amd",
     "target": "es5",
     "sourceMap": true
   },

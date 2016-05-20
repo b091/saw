@@ -4,8 +4,11 @@
   "description": "A SCORM API wrapper for your Sharable Content Object (a.k.a. Learning Object)",
   "main": "src/index.js",
   "devDependencies": {
+    "babel-jest": "^12.0.2",
+    "babel-preset-es2015": "^6.9.0",
     "flog": "0.0.1",
     "jest-cli": "^12.0.2",
+    "tslint": "^3.10.2",
     "typescript": "^1.8.10"
   },
   "scripts": {

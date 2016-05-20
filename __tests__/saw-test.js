@@ -1,8 +1,9 @@
 // __tests__/saw-test.js
 jest.dontMock('../src/index.js');
+jest.dontMock('../src/SCORM/API.js');
 jest.dontMock('../src/SCORM/APIWrapper.js');
-jest.dontMock('../src/SCORM/StatusCode.js');
 jest.dontMock('../src/SCORM/findAPI.js');
+jest.dontMock('../src/SCORM/StatusCode.js');
 
 describe('SCORM API Wrapper', () => {
 

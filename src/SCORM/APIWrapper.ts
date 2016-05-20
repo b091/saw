@@ -1,21 +1,20 @@
 import {findAPI} from './findAPI';
 import {StatusCode} from './StatusCode';
+import {SCORMAPI} from './API';
 
 export class APIWrapper {
 
-  private LMSInitialized = false;
-  private API = null;
-  private sessionLogs = [];
+  private LMSInitialized:boolean = false;
+  private API:SCORMAPI = null;
+  public sessionLogs:Array<LOG> = [];
 
-  constructor() {
-  }
 
-  public unset() {
+  public unset():void {
     this.LMSInitialized = false;
     this.API = null;
   }
 
-  public configure() {
+  public configure():void {
     this.API = findAPI(window);
     if ((this.API == null) && (window.opener != null) && (typeof(window.opener) != 'undefined')) {
       this.API = findAPI(window.opener);
@@ -26,15 +25,15 @@ export class APIWrapper {
     }
   }
 
-  public isConfigured() {
+  public isConfigured():boolean {
     return !(this.API == null);
   }
 
-  public isInitialized() {
+  public isInitialized():boolean {
     return this.LMSInitialized;
   }
 
-  public lmsInitialize() {
+  public lmsInitialize():void {
     //see 3.2.2.1 LMSInitialize
     this.LMSInitialized = 'true' === String(this.API.LMSInitialize(''));
     this.logOperation('LMSInitialize');
@@ -43,16 +42,16 @@ export class APIWrapper {
     }
   }
 
-  public lmsCommit() {
-    const succeeded = 'true' === String(this.API.LMSCommit(''));
+  public lmsCommit():void {
+    const succeeded:boolean = 'true' === String(this.API.LMSCommit(''));
     this.logOperation('LMSCommit');
     if (!succeeded) {
       this.abort('LMSCommit');
     }
   }
 
-  public lmsFinish() {
-    const succeeded = 'true' === String(this.API.LMSFinish(''));
+  public lmsFinish():void {
+    const succeeded:boolean = 'true' === String(this.API.LMSFinish(''));
     this.logOperation('LMSFinish');
     if (!succeeded) {
       this.abort('LMSFinish');
@@ -61,47 +60,47 @@ export class APIWrapper {
     this.unset();
   }
 
-  public setScormValue(parameter, value) {
+  public setScormValue(parameter, value):void {
 
-    const succeeded = 'true' === String(this.API.LMSSetValue(parameter, value));
+    const succeeded:boolean = 'true' === String(this.API.LMSSetValue(parameter, value));
     this.logOperation('LMSSetValue', {'parameter': parameter, 'value': value});
     if (!succeeded) {
       this.abort('LMSSetValue');
     }
   }
 
-  public getScormValue(parameter) {
-    const value = this.API.LMSGetValue(parameter);
+  public getScormValue(parameter:string):string {
+    const value:string = this.API.LMSGetValue(parameter);
     this.logOperation('LMSGetValue', {'parameter': parameter, 'value': value});
     return value;
   }
 
   // A convenience method that do the correct sequence of calls to initialize the communication with the lms
-  public initialize() {
+  public initialize():void {
     this.configure();
     this.lmsInitialize();
   }
 
   // A convenience method with a more
-  public commit() {
+  public commit():void {
     this.lmsCommit();
   }
 
   // A convenience method that do the correct sequence of calls to close the communication with the lms
-  public finish() {
+  public finish():void {
     this.lmsCommit();
     this.lmsFinish();
   }
 
-  public abort(action) {
+  public abort(action):void {
     this.LMSInitialized = false;
     this.API = null;
 
     throw new Error(`${action} failed`);
   }
 
-  public getLastError() {
-    const error = this.API.LMSGetLastError();
+  public getLastError():ERROR {
+    const error:string = this.API.LMSGetLastError();
 
     return {
       code: parseInt(error, 10),
@@ -110,18 +109,31 @@ export class APIWrapper {
   }
 
   public logOperation(scormAPIFn:string, scormAPIFnArguments?:any):void {
-    const scormLastErrCode = this.API.LMSGetLastError();
-    const log = {
+    const scormLastErrCode:string = this.API.LMSGetLastError();
+    this.sessionLogs.push({
       'timestamp': Date.now(),
       'scormFn': scormAPIFn,
       'scormFnArgs': scormAPIFnArguments,
       'errorCode': scormLastErrCode,
       'errorCodeString': StatusCode[scormLastErrCode],
       'errorCodeStringLMS': this.API.LMSGetErrorString(scormLastErrCode),
-      'diagnostic': this.API.LMSGetDiagnostic('')
-    };
-
-    this.sessionLogs.push(log);
+      'diagnostic': this.API.LMSGetDiagnostic(scormLastErrCode)
+    });
   }
 
+}
+
+interface ERROR {
+  code:number;
+  message:string;
+}
+
+interface LOG {
+  timestamp:number;
+  scormFn:string;
+  scormFnArgs:any;
+  errorCode:string;
+  errorCodeString:string;
+  errorCodeStringLMS:string;
+  diagnostic:string;
 }
