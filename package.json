@@ -1,20 +1,19 @@
 {
   "name": "scorm-api-wrapper",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A SCORM API wrapper for your Sharable Content Object (a.k.a. Learning Object)",
   "main": "src/index.js",
   "devDependencies": {
-    "babel-jest": "^12.0.2",
-    "babel-preset-es2015": "^6.9.0",
-    "flog": "0.0.1",
-    "jest-cli": "^12.0.2"
+    "babel-jest": "~12.0.2",
+    "babel-preset-es2015": "~6.9.0",
+    "flog": "~0.0.1",
+    "jest-cli": "~12.0.2",
+    "tslint": "~3.10.2",
+    "typescript": "~1.8.10",
+    "typings": "^1.0.4"
   },
   "scripts": {
-    "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/marco-loche/saw"
+    "test": "./node_modules/.bin/tsc && ./node_modules/.bin/jest"
   },
   "keywords": [
     "scorm",
@@ -34,14 +33,9 @@
       "es6"
     ]
   },
-  "author": "Marco Loche <marco@marcoloche.com> (www.marcoloche.com)",
   "readmeFilename": "README.md",
-  "license": {
-    "type": "MIT",
-    "url": "http://marco-loche.mit-license.org/"
-  },
-  "bugs": {
-    "url": "https://github.com/marco-loche/saw/issues"
-  },
-  "homepage": "https://github.com/marco-loche/saw"
+  "license": "MIT",
+  "engines": {
+    "node": ">=5.11.0"
+  }
 }
