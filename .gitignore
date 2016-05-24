@@ -1,5 +1,6 @@
 .idea/
 node_modules/
+vendor/
 src/**/*.js
 src/**/*.js.map
 _docs
