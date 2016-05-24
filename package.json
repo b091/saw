@@ -1,19 +1,26 @@
 {
-  "name": "scorm-api-wrapper",
+  "name": "scorm-api-wrapper-ts",
   "version": "0.1.0",
-  "description": "A SCORM API wrapper for your Sharable Content Object (a.k.a. Learning Object)",
+  "description": "A SCORM API wrapper for your Sharable Content Object (a.k.a. Learning Object) written in TypeScript",
   "main": "src/index.js",
   "devDependencies": {
-    "babel-jest": "~12.0.2",
-    "babel-preset-es2015": "~6.9.0",
-    "flog": "~0.0.1",
-    "jest-cli": "~12.0.2",
+    "chai": "~3.5.0",
+    "jspm": "~0.16.34",
+    "karma": "~0.13.22",
+    "karma-chai": "~0.1.0",
+    "karma-jspm": "~2.1.1",
+    "karma-mocha": "~1.0.1",
+    "karma-mocha-reporter": "~2.0.3",
+    "karma-phantomjs-launcher": "~1.0.0",
+    "mocha": "~2.4.5",
+    "phantomjs-prebuilt": "~2.1.7",
     "tslint": "~3.10.2",
     "typescript": "~1.8.10",
-    "typings": "^1.0.4"
+    "typings": "~1.0.4"
   },
   "scripts": {
-    "test": "./node_modules/.bin/tsc && ./node_modules/.bin/jest"
+    "postinstall": "./node_modules/.bin/jspm install && ./node_modules/.bin/typings install",
+    "test": "./node_modules/.bin/tsc && ./node_modules/.bin/karma start test/karma.conf.js"
   },
   "keywords": [
     "scorm",
@@ -21,21 +28,20 @@
     "wrapper",
     "e-learning"
   ],
-  "jest": {
-    "scriptPreprocessor": "./node_modules/babel-jest",
-    "testFileExtensions": [
-      "es6",
-      "js"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "es6"
-    ]
-  },
-  "readmeFilename": "README.md",
   "license": "MIT",
   "engines": {
     "node": ">=5.11.0"
+  },
+  "jspm": {
+    "directories": {
+      "packages": "vendor/jspm_packages"
+    },
+    "configFile": "jspm.conf.js",
+    "dependencies": {
+      "typemoq": "npm:typemoq@^0.0.6"
+    },
+    "devDependencies": {
+      "typescript": "npm:typescript@^1.8.10"
+    }
   }
 }
