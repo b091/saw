@@ -8,10 +8,10 @@ function someGlobalFuncWithArgs(a:any, b:any, c:any):any {
   return 'someGlobalFuncWithArgs was called';
 }
 function someGlobalFunc() {
- return 'asdfsdfsdfsdfs !!!!!!1231231';
+ return 'someGlobalFunc';
 }
 
-describe('SCORM API Wrapper', () => {
+describe('testing tests', () => {
 
   let container:any;
 
@@ -25,21 +25,17 @@ describe('SCORM API Wrapper', () => {
 
     it('should check that global no args function is auto sandboxed', () => {
 
-      var mock:any = GlobalMock.ofInstance(someGlobalFunc, null, container);
+      const mock:any = GlobalMock.ofInstance(someGlobalFunc, null, container);
 
       mock.verify(x => x(), Times.never());
 
       GlobalScope.using(mock).with(() => {
-console.log(container.someGlobalFunc);
         container.someGlobalFunc();
         container.someGlobalFunc();
-
         mock.verify(x => x(), Times.exactly(2));
-
       });
 
       container.someGlobalFunc();
-
       mock.verify(x => x(), Times.exactly(2));
     });
 
