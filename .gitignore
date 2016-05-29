@@ -3,7 +3,7 @@ node_modules/
 vendor/
 src/**/*.js
 src/**/*.js.map
-test/**/*.js
+test/spec/*.js
 test/**/*.js.map
 _docs
 npm-debug.log

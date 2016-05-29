@@ -19,6 +19,7 @@ module.exports = (config) => {
     ],
     plugins: [
       'karma-phantomjs-launcher',
+      'karma-chrome-launcher',
       'karma-mocha',
       'karma-mocha-reporter',
       'karma-chai',
@@ -39,7 +40,6 @@ module.exports = (config) => {
       ]
     },
     mochaReporter: {
-      output: 'minimal',
       showDiff: 'unified'
     }
   });
