@@ -1,5 +1,5 @@
-type CMIElement = string;
-type CMIErrorCode = string;
+export type CMIElement = string;
+export type CMIErrorCode = string;
 
 export interface SCORMAPI {
   // – Begins a communication session with the LMS.
