@@ -27,13 +27,14 @@ module.exports = (config) => {
     jspm: {
       config: 'jspm.conf.js',
       serveFiles: [
-        'src/*.js',
         'src/*.js.map',
-        'src/**/*.js',
         'src/**/*.js.map',
         'test/spec/*.js.map'
       ],
+
       loadFiles: [
+        'src/*.js',
+        'src/**/*.js',
         'test/spec/*.js'
       ]
     },
