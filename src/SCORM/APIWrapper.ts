@@ -62,9 +62,10 @@ export class APIWrapper {
   }
 
   public setScormValue(parameter:string, value:string):void {
-    this.logOperation('LMSSetValue', {'parameter': parameter, 'value': value});
+    const operationName:string = 'LMSSetValue';
+    this.logOperation(operationName, {'parameter': parameter, 'value': value});
     if (!this.isSucceeded(this.API.LMSSetValue(parameter, value))) {
-      this.abort('LMSSetValue');
+      this.abort(operationName);
     }
   }
 
