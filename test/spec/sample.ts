@@ -1,8 +1,4 @@
 import * as TypeMoq from 'typemoq';
-import It = TypeMoq.It;
-import GlobalMock = TypeMoq.GlobalMock;
-import Times = TypeMoq.Times;
-import GlobalScope = TypeMoq.GlobalScope;
 
 function someGlobalFuncWithArgs(a:any, b:any, c:any):any {
   return 'someGlobalFuncWithArgs was called';
@@ -25,18 +21,18 @@ describe('testing tests', () => {
 
     it('should check that global no args function is auto sandboxed', () => {
 
-      const mock:any = GlobalMock.ofInstance(someGlobalFunc, null, container);
+      const mock:any = TypeMoq.GlobalMock.ofInstance(someGlobalFunc, null, container);
 
-      mock.verify(x => x(), Times.never());
+      mock.verify(x => x(), TypeMoq.Times.never());
 
-      GlobalScope.using(mock).with(() => {
+      TypeMoq.GlobalScope.using(mock).with(() => {
         container.someGlobalFunc();
         container.someGlobalFunc();
-        mock.verify(x => x(), Times.exactly(2));
+        mock.verify(x => x(), TypeMoq.Times.exactly(2));
       });
 
       container.someGlobalFunc();
-      mock.verify(x => x(), Times.exactly(2));
+      mock.verify(x => x(), TypeMoq.Times.exactly(2));
     });
 
   });

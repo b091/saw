@@ -11,7 +11,7 @@ System.config({
   },
 
   map: {
-    "typemoq": "npm:typemoq@0.0.6",
+    "typemoq": "npm:typemoq@0.1.0",
     "typescript": "npm:typescript@1.8.10",
     "github:jspm/nodelibs-os@0.1.0": {
       "os-browserify": "npm:os-browserify@0.1.2"
@@ -19,7 +19,7 @@ System.config({
     "npm:os-browserify@0.1.2": {
       "os": "github:jspm/nodelibs-os@0.1.0"
     },
-    "npm:typemoq@0.0.6": {
+    "npm:typemoq@0.1.0": {
       "underscore": "npm:underscore@1.8.3"
     },
     "npm:typescript@1.8.10": {
