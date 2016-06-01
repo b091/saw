@@ -126,12 +126,12 @@ export class APIWrapper {
 
 }
 
-interface ERROR {
+export interface ERROR {
   code:number;
   message:string;
 }
 
-interface LOG {
+export interface LOG {
   timestamp:number;
   scormFn:string;
   scormFnArgs:any;
