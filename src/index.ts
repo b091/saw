@@ -1,12 +1,1 @@
-import {APIWrapper} from './SCORM/APIWrapper';
-
-declare const define:any;
-declare const module:any;
-
-((() => {
-  if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = new APIWrapper();
-  } else if (typeof define === 'function' && define.amd) {
-    define(new APIWrapper());
-  }
-}).call(this));
+export {APIWrapper} from './SCORM/APIWrapper';
