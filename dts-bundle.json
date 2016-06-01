@@ -1,0 +1,8 @@
+{
+  "name": "scorm-api-wrapper-ts",
+  "main": "src/index.d.ts",
+  "out": "~/dist/index.d.ts",
+  "removeSource": true,
+  "prefix": "",
+  "separator": "/"
+}
