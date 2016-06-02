@@ -1,6 +1,6 @@
 {
   "name": "scorm-api-wrapper-ts",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A SCORM API wrapper for your Sharable Content Object (a.k.a. Learning Object)",
   "main": "dist/scorm-api-wrapper.js",
   "devDependencies": {
@@ -9,6 +9,7 @@
     "dts-bundle": "~0.4.3",
     "flog": "~0.0.1",
     "jest-cli": "~12.0.2",
+    "systemjs-builder": "~0.15.19",
     "tslint": "~3.10.2",
     "typescript": "~1.8.10",
     "typings": "~1.0.4"
@@ -17,7 +18,7 @@
     "test": "./node_modules/.bin/tsc && ./node_modules/.bin/jest",
     "build": "npm run compile && npm run dist && npm run dts",
     "compile": "./node_modules/.bin/tsc -d",
-    "dist": "./node_modules/.bin/tsc -m amd -t es5 --outFile dist/index.js",
+    "dist": "node ./tasks/dist.js",
     "dts": "./node_modules/.bin/dts-bundle --configJson dts-bundle.json"
   },
   "keywords": [
@@ -39,7 +40,7 @@
     ]
   },
   "typescript": {
-    "definition": "dist/index.d.ts"
+    "definition": "dist/scorm-api-wrapper.d.ts"
   },
   "readmeFilename": "README.md",
   "license": "MIT",
