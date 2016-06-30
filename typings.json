@@ -1,4 +1,5 @@
 {
   "name": "scorm-api-wrapper",
+  "main": "dist/scorm-api-wrapper.d.ts",
   "dependencies": {}
 }
